@@ -2,7 +2,7 @@
 
 <img src="static/usb-gadget-tool-3.png" align="right" height="500" alt="USB Gadget Tool Screenshot">  
 
-Convert your Android to any USB device you like!
+Convert your Android to any USB device you like!  
 USB Gadget Tool allows you to create and activate USB device roles, like a mouse or a keyboard. Connected USB hosts (e.g. a normal computer) will then identify your Android device only under that role.
 It can also be used to deactivate the standard USB Gadget (including mtp, adb, etc.), e.g. for security reasons.  
 
