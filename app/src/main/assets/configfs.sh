@@ -1,0 +1,1 @@
+find /config/usb_gadget/ -exec ls -la {} \; 2>&1

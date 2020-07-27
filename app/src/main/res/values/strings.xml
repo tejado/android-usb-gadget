@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">USB Gadget Tool</string>
+    <string name="no_root">USB Gadget Tool requires "root" permissions.</string>
+    <string name="activate">Activate!</string>
+    <string name="deactivate">Deactivate!</string>
+    <string name="gadget_refresh">Refresh</string>
+    <string name="gadget_add">Add USB Gadget</string>
+    <string name="info">Information</string>
+    <string name="info_title">USB Gadget Tool v0.1 beta</string>
+    <string name="info_message">
+    USB Gadget Tool gives you full control over the USB Device services on your phone. For this ConfigFS on the OS Kernel is used.\n\n
+    By tejado (Tjado Mäcke)\n\n
+    Website:\n
+    https:\/\/github.com/tejado/android-usb-gadget
+    </string>
+</resources>
