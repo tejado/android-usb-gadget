@@ -7,8 +7,6 @@ USB Gadget Tool allows you to create and activate USB device roles, like a mouse
 It can also be used to deactivate the standard USB Gadget (including mtp, adb, etc.), e.g. for security reasons.  
 
 Following USB gadgets are integrated:
-
-Following USB gadgets are integrated:
 * Keyboard & Mouse (/dev/hidg0, /dev/hidg1)
 * FIDO CTAP (/dev/hidg0; for WebAuthn)
 * CCID (/dev/ccid_ctrl, /dev/ccid_bulk)
