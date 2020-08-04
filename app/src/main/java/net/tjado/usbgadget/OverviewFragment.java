@@ -37,12 +37,11 @@ public class OverviewFragment extends Fragment {
 
             if (gadgetAdapter != null) {
                 gadgetAdapter.notifyDataSetChanged();
-
-                rootFlipper.setDisplayedChild(0);
-                if( ! gadgetViewModel.canGetData() ) {
-                    rootFlipper.showNext();
-                }
             }
+        });
+
+        gadgetViewModel.hasRootPermissions().observe(getViewLifecycleOwner(), item -> {
+            rootFlipper.setDisplayedChild(item ? 0 : 1);
         });
 
         gadgetAdapter = new GadgetAdapter(getActivity(), gadgetData);

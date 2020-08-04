@@ -20,26 +20,29 @@ public class GadgetViewModel extends AndroidViewModel {
     private Application application;
 
     private MutableLiveData<List<GadgetObject>> gadgetData;
+    private MutableLiveData<Boolean> rootGranted;
     private MutableLiveData<String> log;
 
     String [] gadgetProfileList;
 
     public GadgetViewModel(@NonNull Application app) {
         super(app);
-
         application = app;
+
         gadgetData = new MutableLiveData<>();
         gadgetData.setValue(new ArrayList<>());
+
+        rootGranted = new MutableLiveData<>();
+        rootGranted.setValue(true);
 
         log = new MutableLiveData<>();
 
         gadgetProfileList = getAllGadgetProfiles();
-
         updateGadgetData();
     }
 
-    public Boolean canGetData() {
-        return ExecuteAsRootUtil.canRunRootCommands();
+    public MutableLiveData<Boolean> hasRootPermissions() {
+        return rootGranted;
     }
 
     public LiveData<List<GadgetObject>> getGadgets() {
@@ -100,11 +103,16 @@ public class GadgetViewModel extends AndroidViewModel {
         String cmd = "for dir in /config/usb_gadget/*/; do echo GADGET_PATH=$dir; cd $dir; if [ \"$?\" -ne \"0\" ]; then echo \"Error - not able to change dir to $dir... exit\"; exit 1; fi; echo UDC=$(cat UDC); find ./configs/ -type l -exec sh -c 'echo FUNCTIONS_ACTIVE=$(basename $(readlink \"$@\"))' _ {} \\;; for f in ./functions/*/; do echo FUNCTIONS=$(basename $f); done; cd ./strings/0x409/; for vars in *; do echo ${vars}=$(cat $vars); done; echo \"=============\"; done; \n";
 
         RootTask mTask = new RootTask(cmd, response -> {
-            //mTextView.setText((String) Response);
-            if (response == null) {
+
+            Boolean status = (Boolean) response.first;
+            String result = (String) response.second;
+
+            rootGranted.setValue(status);
+
+            if (result == null) {
                 return;
             }
-            BufferedReader bufReader = new BufferedReader(new StringReader(response));
+            BufferedReader bufReader = new BufferedReader(new StringReader(result));
             data.clear();
             GadgetObject gadget = new GadgetObject();
 
