@@ -105,7 +105,7 @@ public class ExecuteAsRootUtil
                 InputStream stderr = suProcess.getErrorStream();
 
                 for (String cmd: commands) {
-                    Log.d("root", String.format("Execute command: %s", cmd));
+                    Log.d("ROOT", String.format("Execute command: %s", cmd));
                     stdin.writeBytes(cmd);
                     stdin.flush();
                 }
@@ -115,111 +115,28 @@ public class ExecuteAsRootUtil
 
                 stdin.close();
 
-                StringBuffer sb = new StringBuffer();
+                StringBuffer sbOut = new StringBuffer();
                 Scanner scanner = new Scanner(stdout);
                 while (scanner.hasNext()) {
-                    sb.append(scanner.nextLine());
-                    sb.append(System.lineSeparator());
+                    sbOut.append(scanner.nextLine());
+                    sbOut.append(System.lineSeparator());
                 }
 
+                StringBuffer sbErr = new StringBuffer();
                 Scanner scannerErr = new Scanner(stderr);
                 while (scannerErr.hasNext()) {
-                    Log.d("root", scannerErr.nextLine());
+                    sbErr.append(scannerErr.nextLine());
+                    if (scannerErr.hasNext())
+                        sbErr.append(System.lineSeparator());
                 }
 
-                output = sb.toString();
-                Log.d("root", output);
+                output = sbOut.toString();
+                Log.d("ROOT (stdout)", output);
 
-                try
-                {
-                    int suProcessRetval = suProcess.waitFor();
-                    if (255 != suProcessRetval)
-                    {
-                        // Root access granted
-                        retval = true;
-                    }
-                    else
-                    {
-                        // Root access denied
-                        retval = false;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.e("ROOT", "Error executing root action", ex);
-                }
-            }
-        }
-        catch (IOException ex)
-        {
-            Log.w("ROOT", "Can't get root access", ex);
-        }
-        catch (SecurityException ex)
-        {
-            Log.w("ROOT", "Can't get root access", ex);
-        }
-        catch (Exception ex)
-        {
-            Log.w("ROOT", "Error executing internal operation", ex);
-        }
+                String error = sbErr.toString();
+                Log.d("ROOT (stderr)", error);
 
-        return new Pair(retval, output);
-    }
-
-
-    public static final Pair<Boolean, byte[]> executeBinaryOut(String[] commands)
-    {
-        Boolean retval = false;
-        byte[] output = new byte[64];;
-
-        try
-        {
-            if (commands != null && commands.length > 0)
-            {
-                int count = 64;
-                Process suProcess = Runtime.getRuntime().exec("su -");
-
-                DataOutputStream stdin = new DataOutputStream(suProcess.getOutputStream());
-                InputStream stdout = suProcess.getInputStream();
-                InputStream stderr = suProcess.getErrorStream();
-
-                for (String cmd: commands) {
-                    Log.d("root", String.format("Execute command: %s", cmd));
-                    stdin.writeBytes(cmd);
-                    stdin.flush();
-                }
-
-                stdin.writeBytes("exit\n");
-                stdin.flush();
-                stdin.close();
-
-                int tmp = stdout.read(output, 0, 64);
-                Log.d("muh", String.format("read %d of data", tmp));
-                stdout.close();
-
-                Scanner scannerErr = new Scanner(stderr);
-                while (scannerErr.hasNext()) {
-                    Log.d("root", scannerErr.nextLine());
-                }
-
-                try
-                {
-                    int suProcessRetval = suProcess.waitFor();
-                    if (255 != suProcessRetval)
-                    {
-                        // Root access granted
-                        retval = true;
-                    }
-                    else
-                    {
-                        // Root access denied
-                        retval = false;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.e("ROOT", "Error executing root action", ex);
-                }
+                retval = ! error.equals("Permission denied");
             }
         }
         catch (IOException ex)

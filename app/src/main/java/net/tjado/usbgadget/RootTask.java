@@ -4,13 +4,13 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Pair;
 
-public class RootTask extends AsyncTask<Void, Void, String> {
+public class RootTask extends AsyncTask<Void, Void, Pair> {
     OnRootTaskListener listener;
     Context mContext;
     String[] mCommands;
 
     public interface OnRootTaskListener {
-        public void OnRootTaskFinish(String Response);
+        public void OnRootTaskFinish(Pair response);
     }
 
     public RootTask(String command, OnRootTaskListener listener) {
@@ -24,9 +24,9 @@ public class RootTask extends AsyncTask<Void, Void, String> {
     }
 
     @Override
-    protected String doInBackground(Void... params) {
+    protected Pair doInBackground(Void... params) {
         Pair cr = ExecuteAsRootUtil.execute(mCommands);
-        return (String) cr.second;
+        return cr;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class RootTask extends AsyncTask<Void, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String result) {
+    protected void onPostExecute(Pair result) {
         if( listener != null ) {
             listener.OnRootTaskFinish(result);
         }
