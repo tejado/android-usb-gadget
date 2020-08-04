@@ -6,26 +6,11 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class GadgetObject {
-    protected String mText1;
     protected HashMap<String, String> values = new HashMap<>();
     protected SortedSet<String> functions = new TreeSet<>();
     protected SortedSet<String> activeFunctions = new TreeSet<>();
 
-    private boolean isSelected;
-
     public GadgetObject() {
-    }
-
-    public GadgetObject(String text) {
-        this.setmText1(text);
-    }
-
-    public String getmText1() {
-        return mText1;
-    }
-
-    public void setmText1(String mText1) {
-        this.mText1 = mText1;
     }
 
     public void setValue(String key, String value) {
@@ -85,5 +70,4 @@ public class GadgetObject {
 
         return sb.toString();
     }
-
 }

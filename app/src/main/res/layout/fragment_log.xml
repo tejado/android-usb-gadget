@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarThumbVertical="@color/colorPrimaryDark" android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/log"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:background="@color/cardview_light_background"
+            android:padding="2dp"
+            android:scrollHorizontally="true"
+            android:textIsSelectable="true"
+            android:textSize="12sp" />
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

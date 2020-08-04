@@ -13,14 +13,12 @@ public class RootTask extends AsyncTask<Void, Void, String> {
         public void OnRootTaskFinish(String Response);
     }
 
-    public RootTask(Context ctx, String command, OnRootTaskListener listener) {
-        mContext = ctx;
+    public RootTask(String command, OnRootTaskListener listener) {
         mCommands = new String[] {command};
         this.listener = listener;
     }
 
-    public RootTask(Context ctx, String[] commands, OnRootTaskListener listener) {
-        mContext = ctx;
+    public RootTask(String[] commands, OnRootTaskListener listener) {
         mCommands = commands;
         this.listener = listener;
     }
