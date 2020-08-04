@@ -8,41 +8,28 @@
     android:background="@color/colorPrimaryDescent">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/colorPrimaryDescent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ViewFlipper
-            android:id="@+id/flipper"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_gadgets"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@color/colorPrimaryDescent"/>
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.appbar.AppBarLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/no_root"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:text="@string/no_root"
-                    android:textSize="25sp" />
-            </RelativeLayout>
-        </ViewFlipper>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager"
+            app:layout_anchor="@id/tabs"
+            app:layout_anchorGravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

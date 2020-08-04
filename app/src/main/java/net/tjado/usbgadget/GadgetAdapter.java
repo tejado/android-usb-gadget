@@ -23,7 +23,6 @@ public class GadgetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public GadgetAdapter(Activity context, List<GadgetObject> data) {
         this.context = context;
-        // inflater = LayoutInflater.from(context);
         this.data = data;
     }
 
@@ -92,6 +91,7 @@ public class GadgetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             activate = (Button) itemView.findViewById(R.id.activate);
 
             activate.setOnClickListener(view -> {
+
                 String gadgetPath = gadget.getValue("gadget_path");
                 String[] commands = {};
 
@@ -114,12 +114,12 @@ public class GadgetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     commands = new String[]{cmdDeactivateUsbAll, cmdActivateUsb};
                 }
 
-                RootTask mTask = new RootTask(itemView.getContext(), commands, response -> {
+                RootTask mTask = new RootTask(commands, response -> {
                     //mTextView.setText((String) response);
                 });
                 mTask.execute();
 
-                ((MainActivity) itemView.getContext()).getGadgetData();
+                ((MainActivity) itemView.getContext()).refreshGadgets();
                 return;
             });
         }

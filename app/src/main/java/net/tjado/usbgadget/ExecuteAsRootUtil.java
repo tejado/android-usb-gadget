@@ -8,7 +8,6 @@
  */
 package net.tjado.usbgadget;
 
-import android.util.Log;
 import android.util.Pair;
 
 import java.io.DataInputStream;
