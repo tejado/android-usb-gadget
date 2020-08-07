@@ -21,7 +21,6 @@ Currently the app only enables the USB Gadget. For the usage of these device end
 ## Roadmap
 * Mount of /config if not available
 * Alert if ConfigFS is not supported
-* View the logs of executed root commands inside the app
 * Creating & enabling USB Gadgets during boot
 * Import custom USB Gadget profiles
 * Adding functions to USB Gadgets
