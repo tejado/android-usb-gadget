@@ -8,7 +8,7 @@ public class RootTask extends AsyncTask<Void, Void, Pair> {
     String[] mCommands;
 
     public interface OnRootTaskListener {
-        public void OnRootTaskFinish(Pair response);
+        void OnRootTaskFinish(Pair response);
     }
 
     public RootTask(String command, OnRootTaskListener listener) {
@@ -23,8 +23,7 @@ public class RootTask extends AsyncTask<Void, Void, Pair> {
 
     @Override
     protected Pair doInBackground(Void... params) {
-        Pair cr = ExecuteAsRootUtil.execute(mCommands);
-        return cr;
+        return ExecuteAsRootUtil.execute(mCommands);
     }
 
     @Override

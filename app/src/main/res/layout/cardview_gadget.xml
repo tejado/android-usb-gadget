@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="2dp"
-                android:text="Gadget Path: " />
+                android:text="@string/card_head_gadget_path" />
 
             <TextView
                 android:id="@+id/tv_gadget_path"
@@ -32,7 +32,7 @@
                 android:textStyle="bold"
                 android:elevation="5dp"
                 android:padding="2dp"
-                android:text="n/a" />
+                android:text="@string/card_no_info" />
 
         </LinearLayout>
 
@@ -59,7 +59,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="2dp"
-                            android:text="Manufacturer: " />
+                            android:text="@string/card_head_gadget_manufacturer" />
 
                         <TextView
                             android:id="@+id/tv_gadget_manufacturer"
@@ -68,7 +68,7 @@
                             android:textStyle="bold"
                             android:elevation="5dp"
                             android:padding="2dp"
-                            android:text="n/a" />
+                            android:text="@string/card_no_info" />
                     </TableRow>
                     <TableRow
                         android:layout_width="match_parent"
@@ -78,7 +78,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="2dp"
-                            android:text="Product: " />
+                            android:text="@string/card_head_gadget_product" />
 
                         <TextView
                             android:id="@+id/tv_gadget_product"
@@ -87,7 +87,7 @@
                             android:textStyle="bold"
                             android:elevation="5dp"
                             android:padding="2dp"
-                            android:text="n/a" />
+                            android:text="@string/card_no_info" />
                     </TableRow>
                     <TableRow
                         android:layout_width="match_parent"
@@ -97,7 +97,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="2dp"
-                            android:text="Serialnumber: " />
+                            android:text="@string/card_head_gadget_sn" />
 
                         <TextView
                             android:id="@+id/tv_gadget_sn"
@@ -106,7 +106,7 @@
                             android:textStyle="bold"
                             android:elevation="5dp"
                             android:padding="2dp"
-                            android:text="n/a" />
+                            android:text="@string/card_no_info" />
                     </TableRow>
                     <TableRow
                         android:layout_width="match_parent"
@@ -116,7 +116,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="2dp"
-                            android:text="USB Device: " />
+                            android:text="@string/card_head_gadget_device" />
 
                         <TextView
                             android:id="@+id/tv_gadget_udc"
@@ -125,7 +125,7 @@
                             android:textStyle="bold"
                             android:elevation="5dp"
                             android:padding="2dp"
-                            android:text="n/a" />
+                            android:text="@string/card_no_info" />
                     </TableRow>
                 </TableLayout>
             </LinearLayout>
@@ -141,7 +141,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="2dp"
-                    android:text="Functions:" />
+                    android:text="@string/card_head_gadget_functions" />
                 <TextView
                     android:id="@+id/tv_gadget_functions"
                     android:layout_width="match_parent"
@@ -149,7 +149,7 @@
                     android:textStyle="bold"
                     android:elevation="5dp"
                     android:paddingLeft="15dp"
-                    android:text="n/a" />
+                    android:text="@string/card_no_info" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"

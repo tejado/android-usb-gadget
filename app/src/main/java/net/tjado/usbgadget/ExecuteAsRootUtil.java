@@ -53,7 +53,7 @@ public class ExecuteAsRootUtil
                     exitSu = false;
                     Log.d("ROOT", "Can't get root access or denied by user");
                 }
-                else if (true == currUid.contains("uid=0"))
+                else if (currUid.contains("uid=0"))
                 {
                     retval = true;
                     exitSu = true;
@@ -85,11 +85,11 @@ public class ExecuteAsRootUtil
         return retval;
     }
 
-    public static final Pair<Boolean, String> execute(String command) {
+    public static Pair execute(String command) {
         return execute(new String[]{ command });
     }
 
-    public static final Pair<Boolean, String> execute(String[] commands)
+    public static Pair execute(String[] commands)
     {
         Boolean retval = false;
         String output = null;
@@ -139,11 +139,7 @@ public class ExecuteAsRootUtil
                 retval = ! error.equals("Permission denied");
             }
         }
-        catch (IOException ex)
-        {
-            Log.w("ROOT", "Can't get root access", ex);
-        }
-        catch (SecurityException ex)
+        catch (IOException | SecurityException ex)
         {
             Log.w("ROOT", "Can't get root access", ex);
         }

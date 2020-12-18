@@ -16,7 +16,6 @@ public class GadgetViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<GadgetObject>> gadgetData;
     private MutableLiveData<Boolean> rootGranted;
-    private MutableLiveData<String> log;
 
     GadgetShellApi gsa;
     GadgetAssetProfiles gap;

@@ -14,7 +14,6 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/black"
             android:layout_gravity="start|center"/>
@@ -28,7 +27,7 @@
             android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right"/>
+            android:gravity="end"/>
 
     </LinearLayout>
     <View

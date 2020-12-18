@@ -6,7 +6,7 @@ public class Log {
     protected static OnLogChangeListener onLogChangeListener;
 
     public interface OnLogChangeListener{
-        public void onLogChanged();
+        void onLogChanged();
     }
 
     public void setOnDataChangeListener(OnLogChangeListener onLogChangeListener){

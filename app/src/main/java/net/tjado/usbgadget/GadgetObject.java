@@ -43,11 +43,7 @@ public class GadgetObject {
 
     public Boolean isActivated() {
         String udc = getValue("udc");
-        if (udc.equals("") || udc.equals("not set")) {
-            return false;
-        } else {
-            return true;
-        }
+        return !udc.equals("") && !udc.equals("not set");
     }
 
     public String getFormattedFunctions() {

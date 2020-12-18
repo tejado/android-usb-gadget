@@ -46,7 +46,7 @@ public class GadgetAssetProfiles {
 
             StringBuffer sb = new StringBuffer();
             while (scanner.hasNext()) {
-                sb.append(scanner.nextLine() + "\n");
+                sb.append(scanner.nextLine()).append("\n");
             }
 
             return sb.toString();

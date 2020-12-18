@@ -35,7 +35,7 @@ public class OverviewFragment extends Fragment {
 
         gadgetViewModel.getGadgets().observe(getViewLifecycleOwner(), item -> {
             gadgetData.clear();
-            item.forEach(x -> gadgetData.add(x));
+            gadgetData.addAll(item);
 
             if (gadgetAdapter != null) {
                 gadgetAdapter.notifyDataSetChanged();
