@@ -1,10 +1,17 @@
 package net.tjado.usbgadget;
 
-import androidx.core.util.Consumer;
-
 public class Log {
 
     protected static StringBuffer log = new StringBuffer();
+    protected static OnLogChangeListener onLogChangeListener;
+
+    public interface OnLogChangeListener{
+        public void onLogChanged();
+    }
+
+    public void setOnDataChangeListener(OnLogChangeListener onLogChangeListener){
+        onLogChangeListener = onLogChangeListener;
+    }
 
     // error
     public static void e(String tag, String msg) {
@@ -51,6 +58,10 @@ public class Log {
             log.append(t.getStackTrace().toString());
         }
         log.append(System.getProperty("line.separator"));
+
+        if(onLogChangeListener != null){
+            onLogChangeListener.onLogChanged();
+        }
     }
 
     public static String getLog() {

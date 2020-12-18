@@ -9,10 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.lang.reflect.Field;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +28,24 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPager2 viewPager2 = findViewById(R.id.viewpager);
         viewPager2.setAdapter(new ViewPager2FragmentStateAdapter(this));
+
+        // reduce sensitivity of ViewPager2
+        // https://stackoverflow.com/a/60672891
+        try {
+            Field recyclerViewField = ViewPager2.class.getDeclaredField("mRecyclerView");
+            recyclerViewField.setAccessible(true);
+
+            RecyclerView recyclerView = (RecyclerView) recyclerViewField.get(viewPager2);
+
+            Field touchSlopField = RecyclerView.class.getDeclaredField("mTouchSlop");
+            touchSlopField.setAccessible(true);
+
+            int touchSlop = (int) touchSlopField.get(recyclerView);
+            touchSlopField.set(recyclerView, touchSlop * 3);
+
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2,
@@ -80,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         alertBuilder.setTitle("Add Gadget");
         alertBuilder.setCancelable(true);
 
-        alertBuilder.setItems(gadgetViewModel.gadgetProfileList, (dialog, which) -> gadgetViewModel.loadGadgetProfileFromAsset(gadgetViewModel.gadgetProfileList[which]));
+        alertBuilder.setItems(gadgetViewModel.gadgetProfileList, (dialog, which) -> gadgetViewModel.loadGadgetProfile(gadgetViewModel.gadgetProfileList[which]));
 
         alertBuilder.show();
     }
@@ -97,4 +118,5 @@ public class MainActivity extends AppCompatActivity {
 
         alertBuilder.show();
     }
+
 }

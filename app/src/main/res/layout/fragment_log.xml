@@ -14,11 +14,11 @@
             android:id="@+id/log"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:background="@color/cardview_light_background"
             android:padding="2dp"
             android:scrollHorizontally="true"
             android:textIsSelectable="true"
             android:textSize="12sp" />
+
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

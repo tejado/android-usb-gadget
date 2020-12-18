@@ -1,0 +1,24 @@
+#!/bin/sh
+
+GADGET="keyboard"
+GADGET_PATH="____gadgetPath____"
+
+cd $GADGET_PATH/configs/
+CONFIG_PATH="$GADGET_PATH/configs/`ls -1 | head -1`/"
+STRINGS_PATH="$GADGET_PATH/strings/0x409/"
+
+
+mkdir -p $GADGET_PATH/functions/hid.ctap
+cd $GADGET_PATH/functions/hid.ctap
+
+# HID protocol (according to USB spec: 1 for keyboard)
+echo 0 > protocol
+# device subclass
+echo 0 > subclass
+# number of bytes per record
+echo 64 > report_length
+
+# writing report descriptor
+echo -ne \\x06\\xD0\\xF1\\x09\\x01\\xA1\\x01\\x09\\x20\\x15\\x00\\x26\\xFF\\x00\\x75\\x08\\x95\\x40\\x81\\x02\\x09\\x21\\x15\\x00\\x26\\xFF\\x00\\x75\\x08\\x95\\x40\\x91\\x02\\xC0 > report_desc
+
+ln -s ${GADGET_PATH}/functions/hid.ctap $CONFIG_PATH/hid.ctap

@@ -1,12 +1,10 @@
 package net.tjado.usbgadget;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Pair;
 
 public class RootTask extends AsyncTask<Void, Void, Pair> {
     OnRootTaskListener listener;
-    Context mContext;
     String[] mCommands;
 
     public interface OnRootTaskListener {
