@@ -57,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
                                 tab.setText("Gadgets");
                                 break;
                             case (1):
+                                tab.setText("Device Info");
+                                break;
+                            case (2):
                                 tab.setText("Logs");
                                 break;
                         }

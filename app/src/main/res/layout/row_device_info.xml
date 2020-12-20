@@ -23,12 +23,13 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <Switch
-            android:id="@+id/status"
+        <TextView
+            android:id="@+id/value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="end"/>
-
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/black"
+            android:layout_gravity="start|center"/>
     </LinearLayout>
 
     <View

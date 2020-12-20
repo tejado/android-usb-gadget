@@ -18,6 +18,8 @@ public class ViewPager2FragmentStateAdapter extends FragmentStateAdapter {
             case 0:
                 return new OverviewFragment();
             case 1:
+                return new DeviceInfoFragment();
+            case 2:
                 return new LogFragment();
         }
         return null;

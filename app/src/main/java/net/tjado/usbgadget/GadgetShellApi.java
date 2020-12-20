@@ -40,6 +40,12 @@ public class GadgetShellApi {
         return true;
     }
 
+    public Boolean updateDeviceInfo(RootTask.OnRootTaskListener onRootTaskFinished) {
+
+        String command = "gunzip -c /proc/config.gz";
+        return this.exec(command, onRootTaskFinished);
+    }
+
 
     public void updateGadgetData(MutableLiveData<List<GadgetObject>> returnGadgetList, MutableLiveData<Boolean> returnRootState) {
         List<GadgetObject> data = new ArrayList<>();
