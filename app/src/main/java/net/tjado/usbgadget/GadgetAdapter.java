@@ -3,27 +3,28 @@ package net.tjado.usbgadget;
 import android.app.Activity;
 import android.graphics.Color;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
-
-import java.util.Collections;
-import java.util.List;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.lang.ref.WeakReference;
+import java.util.List;
+
 public class GadgetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Activity context;
     private LayoutInflater inflater;
-    List<GadgetObject> data = Collections.emptyList();
+    private final GadgetAdapterClickInterface listener;
+    List<GadgetObject> data;
 
-    public GadgetAdapter(Activity context, List<GadgetObject> data) {
+    public GadgetAdapter(Activity context, List<GadgetObject> data, GadgetAdapterClickInterface clickListener) {
         this.context = context;
         this.data = data;
+        listener = clickListener;
     }
 
     // Inflate the layout when viewholder created
@@ -32,7 +33,7 @@ public class GadgetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         View view = inflater.from(parent.getContext()).
                 inflate(R.layout.cardview_gadget, parent, false);
-        return new DefaultViewHolder(view);
+        return new DefaultViewHolder(view, listener);
     }
 
     @Override
@@ -55,14 +56,14 @@ public class GadgetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         holder.path.setText(holder.gadget.getValue("gadget_path"));
         holder.functions.setText(Html.fromHtml(holder.gadget.getFormattedFunctions(), Html.FROM_HTML_MODE_LEGACY));
 
+        holder.status.setChecked(holder.gadget.isActivated());
+
         String udc = holder.gadget.getValue("udc");
         holder.udc.setText(udc);
         if (holder.gadget.isActivated()) {
-            holder.card.setCardBackgroundColor(Color.GREEN);
-            holder.activate.setText(R.string.deactivate);
-        } else {
-            holder.activate.setText(R.string.activate);
             holder.card.setCardBackgroundColor(Color.WHITE);
+        } else {
+            holder.card.setCardBackgroundColor(Color.LTGRAY);
         }
 
     }
@@ -77,53 +78,31 @@ public class GadgetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         TextView udc;
         TextView functions;
         TextView path;
-        Button activate;
+        Switch status;
 
-        public DefaultViewHolder(View itemView) {
+        private WeakReference<GadgetAdapterClickInterface> listenerRef;
+
+        public DefaultViewHolder(View itemView, GadgetAdapterClickInterface clickInterface) {
             super(itemView);
-            card = (CardView) itemView.findViewById(R.id.cv_gadget);
-            manufacturer = (TextView) itemView.findViewById(R.id.tv_gadget_manufacturer);
-            product = (TextView) itemView.findViewById(R.id.tv_gadget_product);
-            serialnumber = (TextView) itemView.findViewById(R.id.tv_gadget_sn);
-            udc = (TextView) itemView.findViewById(R.id.tv_gadget_udc);
-            path = (TextView) itemView.findViewById(R.id.tv_gadget_path);
-            functions = (TextView) itemView.findViewById(R.id.tv_gadget_functions);
-            activate = (Button) itemView.findViewById(R.id.activate);
+            card = itemView.findViewById(R.id.cv_gadget);
+            manufacturer = itemView.findViewById(R.id.tv_gadget_manufacturer);
+            product = itemView.findViewById(R.id.tv_gadget_product);
+            serialnumber = itemView.findViewById(R.id.tv_gadget_sn);
+            udc = itemView.findViewById(R.id.tv_gadget_udc);
+            path = itemView.findViewById(R.id.tv_gadget_path);
+            functions = itemView.findViewById(R.id.tv_gadget_functions);
+            status = itemView.findViewById(R.id.tv_gadget_status);
 
-            activate.setOnClickListener(view -> {
+            status.setOnClickListener((buttonView) -> {
+                listenerRef.get().onStatusChange(gadget, status.isChecked());
+            });
 
-                String gadgetPath = gadget.getValue("gadget_path");
-                String[] commands = {};
+            listenerRef = new WeakReference<>(clickInterface);
 
-                if (gadgetPath == null || !gadgetPath.startsWith("/config/")) {
-                    Log.d("root", String.format("gadgetPath errornous value: %s", gadgetPath));
-                    return;
-                }
-
-                if (gadget.isActivated()) {
-                    // deactivate specific gadget
-                    String cmdDeactivateUsb = String.format("echo \"\" > %s/UDC\n", gadgetPath);
-
-                    commands = new String[]{cmdDeactivateUsb};
-                } else {
-                    // deactivate all
-                    String cmdDeactivateUsbAll = "find /config/usb_gadget/  -name UDC -type f -exec sh -c 'echo \"\" >  \"$@\"' _ {} \\;\n";
-                    // activate clicked one
-                    String cmdActivateUsb = String.format("getprop sys.usb.controller > %s/UDC\n", gadgetPath);
-
-                    commands = new String[]{cmdDeactivateUsbAll, cmdActivateUsb};
-                }
-
-                RootTask mTask = new RootTask(commands, response -> {
-                    //mTextView.setText((String) response);
-                });
-                mTask.execute();
-
-                ((MainActivity) itemView.getContext()).refreshGadgets();
-                return;
+            itemView.setOnClickListener(view -> {
+                listenerRef.get().onGadgetClicked( gadget );
             });
         }
-
     }
 
 }

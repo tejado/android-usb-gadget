@@ -6,13 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ViewFlipper;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class OverviewFragment extends Fragment {
 
@@ -21,6 +21,8 @@ public class OverviewFragment extends Fragment {
     private GadgetViewModel gadgetViewModel;
     private List<GadgetObject> gadgetData;
     private ViewFlipper rootFlipper;
+
+    public OverviewFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,7 +35,7 @@ public class OverviewFragment extends Fragment {
 
         gadgetViewModel.getGadgets().observe(getViewLifecycleOwner(), item -> {
             gadgetData.clear();
-            item.forEach(x -> gadgetData.add(x));
+            gadgetData.addAll(item);
 
             if (gadgetAdapter != null) {
                 gadgetAdapter.notifyDataSetChanged();
@@ -44,7 +46,27 @@ public class OverviewFragment extends Fragment {
             rootFlipper.setDisplayedChild(item ? 0 : 1);
         });
 
-        gadgetAdapter = new GadgetAdapter(getActivity(), gadgetData);
+        gadgetAdapter = new GadgetAdapter(getActivity(), gadgetData, new GadgetAdapterClickInterface() {
+            @Override public void onGadgetClicked(GadgetObject gadget) {
+                GadgetFragment openFragment = new GadgetFragment(gadget);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), openFragment, "GadgetFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+            @Override public void onStatusChange(GadgetObject gadget, Boolean newStatus) {
+                if(newStatus) {
+                    gadget.activate(response -> {
+                        gadgetViewModel.updateGadgetData();
+                    });
+                } else {
+                    gadget.deactivate(response -> {
+                        gadgetViewModel.updateGadgetData();
+                    });
+                }
+            }
+        });
+
         gadgetRecyclerView.setAdapter(gadgetAdapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),1);
         gadgetRecyclerView.setLayoutManager(gridLayoutManager);

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+GADGET="keyboard"
+GADGET_PATH="____gadgetPath____"
+
+cd $GADGET_PATH/configs/
+CONFIG_PATH="$GADGET_PATH/configs/`ls -1 | head -1`/"
+STRINGS_PATH="$GADGET_PATH/strings/0x409/"
+
+
+mkdir -p $GADGET_PATH/functions/ccid.usb0
+cd $GADGET_PATH/functions/ccid.usb0
+
+ln -s ${GADGET_PATH}/functions/ccid.usb0 $CONFIG_PATH/ccid.usb0

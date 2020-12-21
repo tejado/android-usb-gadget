@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="2dp"
-                android:text="Gadget Path: " />
+                android:text="@string/card_head_gadget_path" />
 
             <TextView
                 android:id="@+id/tv_gadget_path"
@@ -32,131 +32,140 @@
                 android:textStyle="bold"
                 android:elevation="5dp"
                 android:padding="2dp"
-                android:text="n/a" />
+                android:text="@string/card_no_info" />
 
         </LinearLayout>
 
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:weightSum="5">
-
-        <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="3">
+            android:orientation="horizontal"
+            android:weightSum="5">
 
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TableRow
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="3">
+
+                <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/tv_gadget_manufacturer_header"
+                    <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="2dp"
-                        android:text="Manufacturer: " />
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:id="@+id/tv_gadget_manufacturer_header"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:text="@string/card_head_gadget_manufacturer" />
 
-                    <TextView
-                        android:id="@+id/tv_gadget_manufacturer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        <TextView
+                            android:id="@+id/tv_gadget_manufacturer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:elevation="5dp"
+                            android:padding="2dp"
+                            android:text="@string/card_no_info" />
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:id="@+id/tv_gadget_product_header"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:text="@string/card_head_gadget_product" />
+
+                        <TextView
+                            android:id="@+id/tv_gadget_product"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:elevation="5dp"
+                            android:padding="2dp"
+                            android:text="@string/card_no_info" />
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:id="@+id/tv_gadget_sn_header"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:text="@string/card_head_gadget_sn" />
+
+                        <TextView
+                            android:id="@+id/tv_gadget_sn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:elevation="5dp"
+                            android:padding="2dp"
+                            android:text="@string/card_no_info" />
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:id="@+id/tv_gadget_udc_header"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:text="@string/card_head_gadget_device" />
+
+                        <TextView
+                            android:id="@+id/tv_gadget_udc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:elevation="5dp"
+                            android:padding="2dp"
+                            android:text="@string/card_no_info" />
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="2">
+
+                <TextView
+                    android:id="@+id/tv_gadget_functions_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:text="@string/card_head_gadget_functions" />
+                <TextView
+                    android:id="@+id/tv_gadget_functions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:elevation="5dp"
+                    android:paddingLeft="15dp"
+                    android:text="@string/card_no_info" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right|bottom">
+                    <Switch
+                        android:id="@+id/tv_gadget_status"
                         android:textStyle="bold"
                         android:elevation="5dp"
                         android:padding="2dp"
-                        android:text="n/a" />
-                </TableRow>
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/tv_gadget_product_header"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="2dp"
-                        android:text="Product: " />
-
-                    <TextView
-                        android:id="@+id/tv_gadget_product"
+                        android:checked="false"
+                        android:gravity="right|bottom"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:elevation="5dp"
-                        android:padding="2dp"
-                        android:text="n/a" />
-                </TableRow>
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/tv_gadget_sn_header"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="2dp"
-                        android:text="Serialnumber: " />
-
-                    <TextView
-                        android:id="@+id/tv_gadget_sn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:elevation="5dp"
-                        android:padding="2dp"
-                        android:text="n/a" />
-                </TableRow>
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:id="@+id/tv_gadget_udc_header"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="2dp"
-                        android:text="USB Device: " />
-
-                    <TextView
-                        android:id="@+id/tv_gadget_udc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:elevation="5dp"
-                        android:padding="2dp"
-                        android:text="n/a" />
-                </TableRow>
-            </TableLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="2">
-
-            <TextView
-                android:id="@+id/tv_gadget_functions_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:text="Functions:" />
-            <TextView
-                android:id="@+id/tv_gadget_functions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:elevation="5dp"
-                android:paddingLeft="15dp"
-                android:text="n/a" />
-
-            <Button
-                android:id="@+id/activate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Activate!" />
-        </LinearLayout>
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
