@@ -31,7 +31,7 @@ public class DeviceInfoFragment extends Fragment {
         this.v = inflater.inflate(R.layout.fragment_device_info, container, false);
 
         deviceData = new MutableLiveData<>();
-        deviceData.setValue(new TreeMap<String, String>());
+        deviceData.setValue(new TreeMap<>(new DeviceInfoMapComparator()));
 
         deviceData.observe(getViewLifecycleOwner(), item -> {
             this.loadData(item);
@@ -78,9 +78,12 @@ public class DeviceInfoFragment extends Fragment {
                     value = "No";
                     color = "#ff0000";
                     break;
-                default:
+                case "NOT_SET":
                     value = "Not set";
                     color = "#ff0000";
+                    break;
+                default:
+                    color = "#000000";
             }
 
             tvValue.setText(Html.fromHtml(String.format("<font color=%s>%s</font>", color, value), Html.FROM_HTML_MODE_LEGACY));

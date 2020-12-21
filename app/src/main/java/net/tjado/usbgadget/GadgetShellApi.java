@@ -44,13 +44,13 @@ public class GadgetShellApi {
 
     public void updateDeviceInfo(MutableLiveData<TreeMap<String, String>> returnDeviceData) {
 
-        String command = "gunzip -c /proc/config.gz | grep -i configfs | sed 's/# //; s/ is not set/=NOT_SET/'\n";
+        String command = "echo KERNEL_VERSION=`(uname -r |cut -d '-' -f1 )` && (gunzip -c /proc/config.gz | grep -i configfs | sed 's/# //; s/ is not set/=NOT_SET/')\n";
         this.exec(command, response -> {
             Boolean status = (Boolean) response.first;
             String result = (String) response.second;
 
             BufferedReader bufReader = new BufferedReader(new StringReader(result));
-            TreeMap<String, String> deviceData = new TreeMap<>();
+            TreeMap<String, String> deviceData = new TreeMap<>(new DeviceInfoMapComparator());
 
             try {
                 String line;
