@@ -48,13 +48,11 @@ public class GadgetObject {
 
     public String getFormattedFunctions() {
         StringBuffer sb =  new StringBuffer();
-        String color = "";
+        String color = "#ff0000";
 
         for(String function : functions) {
             if( activeFunctions.contains(function)) {
                 color = "#008000";
-            } else {
-                color = "#ff0000";
             }
             sb.append(String.format("<font color=%s>%s</font><br />", color, function));
         }

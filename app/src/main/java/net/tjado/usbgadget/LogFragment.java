@@ -19,7 +19,14 @@ public class LogFragment extends Fragment {
 
         logText.setText(Log.getLog());
         Log.onLogChangeListener = () -> {
-            logText.setText(Log.getLog());
+            getActivity().runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    logText.setText(Log.getLog());
+                }
+            });
+
         };
 
         return v;

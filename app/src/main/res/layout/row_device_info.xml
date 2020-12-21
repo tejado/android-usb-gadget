@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/black"
-            android:layout_gravity="start|center"/>
+            android:layout_gravity="start"/>
 
         <Space
             android:layout_width="0dp"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/black"
-            android:layout_gravity="start|center"/>
+            android:layout_gravity="end"/>
     </LinearLayout>
 
     <View
@@ -37,4 +37,4 @@
         android:layout_height="1dp"
         android:background="@color/cardview_shadow_start_color" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

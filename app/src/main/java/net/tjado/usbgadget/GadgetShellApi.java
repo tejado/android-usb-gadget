@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData;
 import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 public class GadgetShellApi {
 
@@ -40,10 +42,30 @@ public class GadgetShellApi {
         return true;
     }
 
-    public Boolean updateDeviceInfo(RootTask.OnRootTaskListener onRootTaskFinished) {
+    public void updateDeviceInfo(MutableLiveData<TreeMap<String, String>> returnDeviceData) {
 
-        String command = "gunzip -c /proc/config.gz";
-        return this.exec(command, onRootTaskFinished);
+        String command = "gunzip -c /proc/config.gz | grep -i configfs | sed 's/# //; s/ is not set/=NOT_SET/'\n";
+        this.exec(command, response -> {
+            Boolean status = (Boolean) response.first;
+            String result = (String) response.second;
+
+            BufferedReader bufReader = new BufferedReader(new StringReader(result));
+            TreeMap<String, String> deviceData = new TreeMap<>();
+
+            try {
+                String line;
+                while ((line = bufReader.readLine()) != null) {
+                    String[] parts = line.split("=",2);
+                    deviceData.put(parts[0].toLowerCase(), parts[1]);
+                }
+            }
+            catch (Exception e) {
+                Log.d("root", e.getMessage());
+                e.printStackTrace();
+            }
+
+            returnDeviceData.setValue(deviceData);
+        });
     }
 
 

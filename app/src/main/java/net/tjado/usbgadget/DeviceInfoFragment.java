@@ -1,56 +1,91 @@
 package net.tjado.usbgadget;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import java.io.BufferedReader;
+import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class DeviceInfoFragment extends Fragment {
+
+    private MutableLiveData<TreeMap<String,String>> deviceData;
+    private View v;
 
     public DeviceInfoFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_device_info, container, false);
-        TextView logText = (TextView) v.findViewById(R.id.log);
+        this.v = inflater.inflate(R.layout.fragment_device_info, container, false);
 
-        logText.setText(Log.getLog());
-        Log.onLogChangeListener = () -> {
-            logText.setText(Log.getLog());
-        };
+        deviceData = new MutableLiveData<>();
+        deviceData.setValue(new TreeMap<String, String>());
+
+        deviceData.observe(getViewLifecycleOwner(), item -> {
+            this.loadData(item);
+        });
 
         GadgetShellApi gsa = new GadgetShellApi();
-        gsa.updateDeviceInfo(response -> {
-            this.loadData();
-        });
+        gsa.updateDeviceInfo(deviceData);
 
         return v;
     }
 
-    private void loadData() {
-    /*
-        for(String functionName : functions) {
-            View vi = getLayoutInflater().inflate(R.layout.row_function, null);
+    private void loadData(Map<String, String> deviceData) {
 
-            TextView tv = vi.findViewById(R.id.name);
-            tv.setText(functionName);
+        LinearLayout list = this.v.findViewById(R.id.list_device_data);
+        list.removeAllViews();
 
-            Switch f_status = vi.findViewById(R.id.status);
-            f_status.setChecked( gadget.getActiveFunctions().contains(functionName) );
-            f_status.setOnClickListener((buttonView) -> {
-                if (f_status.isChecked()){
-                    gadget.activateFunction(functionName, false);
-                } else {
-                    gadget.deactivateFunction(functionName, true);
-                }
-                gadgetViewModel.reloadGadgetData();
-            });
+        View viHead = getLayoutInflater().inflate(R.layout.row_device_info, null);
+
+        TextView tvHeadName = viHead.findViewById(R.id.name);
+        tvHeadName.setText("Kernel Config Parameter");
+        tvHeadName.setTypeface(null, Typeface.BOLD);
+
+        TextView tvHeadValue = viHead.findViewById(R.id.value);
+        tvHeadValue.setText("Value");
+        tvHeadValue.setTypeface(null, Typeface.BOLD);
+        list.addView(viHead);
+
+        for (Map.Entry<String, String> entry : deviceData.entrySet()) {
+            View vi = getLayoutInflater().inflate(R.layout.row_device_info, null);
+
+            TextView tvName = vi.findViewById(R.id.name);
+            tvName.setText(entry.getKey().toUpperCase());
+
+            TextView tvValue = vi.findViewById(R.id.value);
+            String value = entry.getValue();
+
+            String color;
+            switch (value) {
+                case "y":
+                    value = "Yes";
+                    color = "#008000";
+                    break;
+                case "n":
+                    value = "No";
+                    color = "#ff0000";
+                    break;
+                default:
+                    value = "Not set";
+                    color = "#ff0000";
+            }
+
+            tvValue.setText(Html.fromHtml(String.format("<font color=%s>%s</font>", color, value), Html.FROM_HTML_MODE_LEGACY));
 
             list.addView(vi);
-        }*/
+        }
     }
 }

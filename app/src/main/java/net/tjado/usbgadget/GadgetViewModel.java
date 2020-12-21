@@ -42,7 +42,7 @@ public class GadgetViewModel extends AndroidViewModel {
         return rootGranted;
     }
 
-    public LiveData<List<GadgetObject>> getGadgets() {
+    public MutableLiveData<List<GadgetObject>> getGadgets() {
         return gadgetData;
     }
 
