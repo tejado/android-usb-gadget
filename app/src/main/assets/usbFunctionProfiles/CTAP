@@ -1,6 +1,6 @@
 #!/bin/sh
 
-GADGET="keyboard"
+GADGET="ctap"
 GADGET_PATH="____gadgetPath____"
 
 cd $GADGET_PATH/configs/
