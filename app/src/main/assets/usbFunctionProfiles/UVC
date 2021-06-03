@@ -1,0 +1,33 @@
+#!/bin/sh
+
+GADGET="camera"
+GADGET_PATH="____gadgetPath____"
+
+cd $GADGET_PATH/configs/
+CONFIG_PATH="$GADGET_PATH/configs/`ls -1 | head -1`/"
+STRINGS_PATH="$GADGET_PATH/strings/0x409/"
+FUNCTION_PATH="$GADGET_PATH/functions/uvc.usb0"
+
+mkdir -p $FUNCTION_PATH/control/header/h
+cd $FUNCTION_PATH
+
+ln -s control/header/h control/class/fs
+
+mkdir -p $FUNCTION_PATH/streaming/mjpeg/m/720p
+cd $FUNCTION_PATH/streaming/mjpeg/m/720p
+echo 5000000 > dwFrameInterval
+echo 1280 > wWidth
+echo 720 > wHeight
+echo 29491200 > dwMinBitRate
+echo 29491200 > dwMaxBitRate
+echo 1843200 > dwMaxVideoFrameBufferSize
+
+mkdir -p $FUNCTION_PATH/streaming/header/h
+cd $FUNCTION_PATH/streaming/header/h
+ln -s ../../mjpeg/m
+cd ../../class/fs
+ln -s ../../header/h
+cd ../../class/hs
+ln -s ../../header/h
+
+ln -s $FUNCTION_PATH $CONFIG_PATH/uvc.usb0

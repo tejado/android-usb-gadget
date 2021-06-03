@@ -10,6 +10,7 @@ Following USB gadgets are integrated:
 * Keyboard & Mouse (/dev/hidg0, /dev/hidg1)
 * FIDO CTAP (/dev/hidg0; for WebAuthn)
 * CCID (/dev/ccid_ctrl, /dev/ccid_bulk)
+* UVC camera (/dev/video?)
 
 USB Gadget Tool requires root permissions and a Kernel with ConfigFS support.
 Currently the app only enables the USB Gadget. For the usage of these device endpoints (e.g. /dev/hidg0) further apps are required (see Use-Cases).
