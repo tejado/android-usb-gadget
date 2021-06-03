@@ -6,7 +6,7 @@
     <string name="gadget_refresh">Refresh</string>
     <string name="gadget_add">Add USB Gadget</string>
     <string name="info">Information</string>
-    <string name="info_title">USB Gadget Tool v0.3 beta</string>
+    <string name="info_title">USB Gadget Tool v0.4 beta</string>
     <string name="info_message">
 USB Gadget Tool gives you full control over the USB Device services on your phone. For this ConfigFS on the OS Kernel is used.\n\n
 By tejado (Tjado Mäcke)\n\n
