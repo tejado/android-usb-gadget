@@ -15,6 +15,10 @@ Following USB gadgets are integrated:
 USB Gadget Tool requires root permissions and a Kernel with ConfigFS support.
 Currently the app only enables the USB Gadget. For the usage of these device endpoints (e.g. /dev/hidg0) further apps are required (see Use-Cases).
 
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/net.tjado.usbgadget/)
+
 ## Use-Cases
 * [Authorizer](https://github.com/tejado/Authorizer)
 * [hid-gadget-test](https://github.com/pelya/android-keyboard-gadget)
