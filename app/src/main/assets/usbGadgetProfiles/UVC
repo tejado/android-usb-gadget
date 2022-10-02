@@ -1,14 +1,19 @@
 #!/bin/sh
 
-GADGET="camera"
-GADGET_PATH="____gadgetPath____"
+CONFIGFS_DIR="/config"
+GADGETS_PATH="${CONFIGFS_DIR}/usb_gadget"
 
-cd $GADGET_PATH/configs/
-CONFIG_PATH="$GADGET_PATH/configs/`ls -1 | head -1`/"
+GADGET="uvc"
+GADGET_PATH=${GADGETS_PATH}/${GADGET}
+
+CONFIG_PATH="$GADGET_PATH/configs/c.1/"
 STRINGS_PATH="$GADGET_PATH/strings/0x409/"
 FUNCTION_PATH="$GADGET_PATH/functions/uvc.usb0"
 
+mkdir -p $CONFIG_PATH
+mkdir -p $STRINGS_PATH
 mkdir -p $FUNCTION_PATH
+
 cd $FUNCTION_PATH
 
 echo 3072 > streaming_maxpacket
@@ -101,4 +106,24 @@ ln -s streaming/header/h streaming/class/hs/
 ln -s streaming/header/h streaming/class/ss/
 
 
-ln -s $FUNCTION_PATH $CONFIG_PATH/uvc.usb0
+cd $GADGET_PATH
+echo 0x1d6b > idVendor # Linux Foundation
+echo 0x0104 > idProduct # Multifunction Composite Gadget
+echo 0x0100 > bcdDevice # v1.0.0
+echo 0x0200 > bcdUSB # USB2
+
+echo 0xEF   > bDeviceClass
+echo 0x02   > bDeviceSubClass
+echo 0x01   > bDeviceProtocol
+
+cd $STRINGS_PATH
+echo "tejado" > manufacturer
+echo "Android USB Camera" > product
+echo "42" > serialnumber
+
+cd $CONFIG_PATH
+echo 500 > MaxPower
+mkdir -p strings/0x409
+echo "UVC Config" > strings/0x409/configuration
+
+ln -s ${GADGET_PATH}/functions/uvc.usb0 $CONFIG_PATH/uvc.usb0
