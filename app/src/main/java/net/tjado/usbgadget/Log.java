@@ -55,7 +55,8 @@ public class Log {
     protected static void internalLog(String tag, String msg, Throwable t) {
         log.append(String.format("%s - %s", tag, msg));
         if (t != null) {
-            log.append(t.getStackTrace().toString());
+            log.append(": ");
+            log.append(t.getMessage());
         }
         log.append(System.getProperty("line.separator"));
 

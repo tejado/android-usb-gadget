@@ -49,6 +49,10 @@ public class GadgetShellApi {
             Boolean status = (Boolean) response.first;
             String result = (String) response.second;
 
+            if (status == false || result == null) {
+                return;
+            }
+
             BufferedReader bufReader = new BufferedReader(new StringReader(result));
             TreeMap<String, String> deviceData = new TreeMap<>(new DeviceInfoMapComparator());
 

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.google.android.material.tabs.TabLayout;
 
 public class OverviewFragment extends Fragment {
 
@@ -44,6 +45,7 @@ public class OverviewFragment extends Fragment {
 
         gadgetViewModel.hasRootPermissions().observe(getViewLifecycleOwner(), item -> {
             rootFlipper.setDisplayedChild(item ? 0 : 1);
+            ((TabLayout) getActivity().findViewById(R.id.tabs)).getTabAt(1).view.setClickable(item); //disable clicking
         });
 
         gadgetAdapter = new GadgetAdapter(getActivity(), gadgetData, new GadgetAdapterClickInterface() {
