@@ -3,7 +3,7 @@
 CONFIGFS_DIR="/config"
 GADGETS_PATH="${CONFIGFS_DIR}/usb_gadget"
 
-GADGET="uvc"
+GADGET="____gadgetName____"
 GADGET_PATH=${GADGETS_PATH}/${GADGET}
 
 CONFIG_PATH="$GADGET_PATH/configs/c.1/"

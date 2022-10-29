@@ -3,7 +3,7 @@
 CONFIGFS_DIR="/config"
 GADGETS_PATH="${CONFIGFS_DIR}/usb_gadget"
 
-GADGET="gadget_${RANDOM}"
+GADGET="____gadgetName____"
 GADGET_PATH=${GADGETS_PATH}/${GADGET}
 
 CONFIG_PATH="$GADGET_PATH/configs/c.1/"
@@ -24,4 +24,5 @@ echo "42" > serialnumber
 
 cd $CONFIG_PATH
 echo 120 > MaxPower
+mkdir -p strings/0x409
 echo "Configuration" > strings/0x409/configuration

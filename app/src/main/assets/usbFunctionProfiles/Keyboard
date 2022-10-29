@@ -1,6 +1,5 @@
 #!/bin/sh
 
-GADGET="keyboard"
 GADGET_PATH="____gadgetPath____"
 
 cd $GADGET_PATH/configs/
