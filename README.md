@@ -23,15 +23,20 @@ Currently the app only enables the USB Gadget. For the usage of these device end
 * [Authorizer](https://github.com/tejado/Authorizer)
 * [hid-gadget-test](https://github.com/pelya/android-keyboard-gadget)
 
+## Features
+* Comfortable USB gadget management (listing, adding and activating)
+* Adding & activating USB Gadgets during boot
+* Adding functions to USB Gadgets
+* Device info (Kernel version and available gadgets in Kernel)
+* Available in F-Droid store
+
 ## Roadmap
 * Mount of /config if not available
 * Alert if ConfigFS is not supported
-* Creating & enabling USB Gadgets during boot
 * Import custom USB Gadget profiles
-* Adding functions to USB Gadgets
 * Example USB Gadget usage (USB Gadget Tool currently only manages USB Gadgets, not implementations of these)
 * Optional telemetry to understand better how all the Android vendors compile their kernel (e.g. what USB Gadgets are available)
-* F-Droid & Google Play Store distribution
+* Google Play Store distribution
 
 ## How does it work?
 USB Gadget Tool uses ConfigFS - an userspace API inside the Linux Kernel - for creation of arbitrary USB composite devices.
