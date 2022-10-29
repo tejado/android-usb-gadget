@@ -23,4 +23,15 @@ https:\/\/github.com/tejado/android-usb-gadget
     <string name="card_head_gadget_status">Gadget Status:</string>
     <string name="card_head_gadget_functions">Functions:</string>
     <string name="add_function">Add Function</string>
+    <string name="gadget_manager_card_tooltip">Available gadgets</string>
+    <string name="head_gadget_boot_activate">Activate gadget during boot:</string>
+    <string name="card_head_gadget_settings">General Settings</string>
+    <string name="card_head_gadget_profile">Gadget Profile:</string>
+    <string name="card_head_gadget_boot_create">Add gadget during boot:</string>
+    <string name="card_head_gadget_boot_activate">Activate gadget during boot:</string>
+    <string name="warning">Warning</string>
+    <string name="btn_cancel">CANCEL</string>
+    <string name="btn_understood">Got it!</string>
+    <string name="diag_warning_boot_mismatch">Only gadgets added at boot can be activated at boot!\nSee gadget configuration below</string>
+    <string name="diag_warning_boot">Please test the gadgets carefully before enabling them during boot!\n\nAdding / activating gadgets during boot can lead to infinity reboot loops on certain devices!\n\nGadgets are getting added / created after unlocking the screen. Before that, the system default is applied.</string>
 </resources>
