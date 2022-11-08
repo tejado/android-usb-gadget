@@ -1,0 +1,39 @@
+#!/bin/sh
+
+CONFIGFS_DIR="/config"
+GADGETS_PATH="${CONFIGFS_DIR}/usb_gadget"
+
+GADGET="____gadgetName____"
+GADGET_PATH=${GADGETS_PATH}/${GADGET}
+
+CONFIG_PATH="$GADGET_PATH/configs/c.1/"
+STRINGS_PATH="$GADGET_PATH/strings/0x409/"
+
+mkdir -p $CONFIG_PATH
+mkdir -p $STRINGS_PATH
+
+FUNCTION_PATH_SERIAL="$GADGET_PATH/functions/acm.usb0"
+mkdir -p "$FUNCTION_PATH_SERIAL"
+
+cd $GADGET_PATH
+echo 0x1d6b > idVendor # Linux Foundation
+echo 0x0104 > idProduct # Multifunction Composite Gadget
+echo 0x0100 > bcdDevice # v1.0.0
+echo 0x0200 > bcdUSB # USB2
+
+echo 0xEF   > bDeviceClass
+echo 0x02   > bDeviceSubClass
+echo 0x01   > bDeviceProtocol
+
+cd $STRINGS_PATH
+echo "tejado" > manufacturer
+echo "Serial USB Gadget" > product
+echo "42" > serialnumber
+
+cd $CONFIG_PATH
+echo 100 > MaxPower
+mkdir -p strings/0x409
+echo "Serial Config" > strings/0x409/configuration
+
+ln -s ${CONFIG_PATH} ${GADGET_PATH}/os_desc
+ln -s $FUNCTION_PATH_SERIAL $CONFIG_PATH/
