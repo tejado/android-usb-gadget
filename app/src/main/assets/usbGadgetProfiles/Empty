@@ -23,6 +23,6 @@ echo "Android USB Gadget" > product
 echo "42" > serialnumber
 
 cd $CONFIG_PATH
-echo 120 > MaxPower
+echo 100 > MaxPower
 mkdir -p strings/0x409
 echo "Configuration" > strings/0x409/configuration
