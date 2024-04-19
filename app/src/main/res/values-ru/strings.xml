@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Инструмент USB Gadget</string>
+    <string name="no_root">USB Gadget Tool требует "root" доступа.</string>
+    <string name="activate">Активировать!</string>
+    <string name="deactivate">Деактивировать!</string>
+    <string name="gadget_refresh">Обновить</string>
+    <string name="gadget_add">Добавть USB Гаджет</string>
+    <string name="info">Информация</string>
+    <string name="info_title">USB Gadget Tool v0.4 beta</string>
+    <string name="info_message">
+USB Gadget Tool дает вам полный контроль над службами USB-устройств на вашем телефоне. Для этого используется ConfigFS на ядре ОС.\n\n
+Автор: tejado (Tjado Mäcke)\n\n
+Вебсайт:\n
+https:\/\/github.com/tejado/android-usb-gadget
+    </string>
+    <string name="card_tooltip">Кликните по Гаджету чтобы показать больше опций!</string>
+    <string name="card_head_gadget_path">Путь Гаджета:</string>
+    <string name="card_no_info">н/д</string>
+    <string name="card_head_gadget_manufacturer">Производитель:</string>
+    <string name="card_head_gadget_product">Продукт:</string>
+    <string name="card_head_gadget_sn">Серийный номер:</string>
+    <string name="card_head_gadget_device">USB устройство:</string>
+    <string name="card_head_gadget_status">Статус Гаджета:</string>
+    <string name="card_head_gadget_functions">Функции:</string>
+    <string name="add_function">Добавить Функцию</string>
+    <string name="gadget_manager_card_tooltip">Доступные гаджеты</string>
+    <string name="head_gadget_boot_activate">Активировать гаджет во время загрузки:</string>
+    <string name="card_head_gadget_settings">Общие настройки</string>
+    <string name="card_head_gadget_profile">Профиль гаджета:</string>
+    <string name="card_head_gadget_boot_create">Добавить гаджет во время загрузки:</string>
+    <string name="card_head_gadget_boot_activate">Активировать гаджет во время загрузки:</string>
+    <string name="warning">Предупреждение</string>
+    <string name="btn_cancel">ОТМЕНИТЬ</string>
+    <string name="btn_understood">Принято!</string>
+    <string name="diag_warning_boot_mismatch">При загрузке можно активировать только гаджеты добавленные на загрузку!\nСм. конфигурацию гаджета ниже</string>
+    <string name="diag_warning_boot">Пожалуйста внимательно проверьте гаджеты прежде чем включать их во время загрузки!\n\nДобавление/активация гаджетов во время загрузки может привести к бесконечным циклам перезагрузки на определенных устройствах!\n\nГаджеты добавляются/создаются после разблокировки экрана. До этого применяются системные настройки по умолчанию.</string>
+</resources>
