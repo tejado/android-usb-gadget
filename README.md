@@ -41,3 +41,10 @@ Currently the app only enables the USB Gadget. For the usage of these device end
 ## How does it work?
 USB Gadget Tool uses ConfigFS - an userspace API inside the Linux Kernel - for creation of arbitrary USB composite devices.
 https://www.kernel.org/doc/Documentation/filesystems/configfs/configfs.txt
+
+## Translation
+Please help to translate on [Weblate](https://toolate.othing.xyz/projects/android-usb-gadget).
+
+<a href="https://toolate.othing.xyz/projects/android-usb-gadget">
+<img src="https://toolate.othing.xyz/widget/android-usb-gadget/multi-auto.svg" alt="Translation status" />
+</a>
