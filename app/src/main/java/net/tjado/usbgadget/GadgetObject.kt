@@ -9,6 +9,9 @@ class GadgetObject {
         private set
     var activeFunctions = ArrayList<String>()
         private set
+    private val hidMinors = HashMap<String, String>()
+    private val keyboardFunctions = HashSet<String>()
+    private val ctapFunctions = HashSet<String>()
     var shellApi = GadgetShellApi()
 
     fun setValue(key: String, value: String) {
@@ -31,6 +34,37 @@ class GadgetObject {
         activeFunctions.add(f)
     }
 
+    fun setHidMinor(function: String, minor: String) {
+        hidMinors[function] = minor
+    }
+
+    fun setHidType(function: String, protocol: String, descriptorStart: String) {
+        if (protocol == HID_PROTOCOL_KEYBOARD) {
+            keyboardFunctions.add(function)
+        }
+        if (descriptorStart == FIDO_USAGE_PAGE_ITEM) {
+            ctapFunctions.add(function)
+        }
+    }
+
+    private fun activeNode(candidates: Set<String>): String? {
+        if (!isActivated) {
+            return null
+        }
+        return candidates.firstOrNull { activeFunctions.contains(it) }?.let { getHidNode(it) }
+    }
+
+    val activeKeyboardNode: String?
+        get() = activeNode(keyboardFunctions)
+
+    val activeCtapNode: String?
+        get() = activeNode(ctapFunctions)
+
+    /** The node depends on creation order across all gadgets, so it must not be assumed. */
+    fun getHidNode(function: String): String? {
+        return hidMinors[function]?.let { "/dev/hidg$it" }
+    }
+
     val isActivated: Boolean
         get() {
             val udc = getValue("udc")
@@ -50,6 +84,11 @@ class GadgetObject {
             return sb.toString()
         }
 
+    private companion object {
+        const val HID_PROTOCOL_KEYBOARD = "1"
+        const val FIDO_USAGE_PAGE_ITEM = "06d0f1"
+    }
+
     fun activate(onRootTaskFinished: OnRootTaskListener? = null): Boolean {
         return shellApi.activate(getValue("gadget_path"), onRootTaskFinished)
     }
@@ -58,7 +97,11 @@ class GadgetObject {
         return shellApi.deactivate(getValue("gadget_path"), onRootTaskFinished)
     }
 
-    fun activateFunction(function: String, reactivateGadget: Boolean): Boolean {
+    fun activateFunction(
+        function: String,
+        reactivateGadget: Boolean,
+        onRootTaskFinished: OnRootTaskListener? = null
+    ): Boolean {
         val gadgetPath = getValue("gadget_path")
         val gadgetConfigPath = getValue("config_path")
 
@@ -66,7 +109,8 @@ class GadgetObject {
             gadgetPath,
             gadgetConfigPath,
             function,
-            isActivated && reactivateGadget
+            isActivated && reactivateGadget,
+            onRootTaskFinished
         )
 
         if (status) {
@@ -77,7 +121,11 @@ class GadgetObject {
         return status
     }
 
-    fun deactivateFunction(function: String, reactivateGadget: Boolean): Boolean {
+    fun deactivateFunction(
+        function: String,
+        reactivateGadget: Boolean,
+        onRootTaskFinished: OnRootTaskListener? = null
+    ): Boolean {
         val gadgetPath = getValue("gadget_path")
         val gadgetConfigPath = getValue("config_path")
 
@@ -85,12 +133,13 @@ class GadgetObject {
             gadgetPath,
             gadgetConfigPath,
             function,
-            isActivated && reactivateGadget
+            isActivated && reactivateGadget,
+            onRootTaskFinished
         )
 
         if (status) {
             // remove deactivated function from activeFunctions to avoid refreshing configFS data
-            activeFunctions.removeIf { anObject -> function == anObject }
+            activeFunctions.removeAll { anObject -> function == anObject }
         }
 
         return status

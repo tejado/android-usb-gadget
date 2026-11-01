@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.os.Bundle
 import android.graphics.Typeface
-import android.text.Html
 import android.view.View
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import net.tjado.usbgadget.databinding.FragmentDeviceInfoBinding
@@ -68,9 +68,9 @@ class DeviceInfoFragment : Fragment() {
                 }
                 else -> color = "#000000"
             }
-            rowEntry.value.text = Html.fromHtml(
+            rowEntry.value.text = HtmlCompat.fromHtml(
                 String.format("<font color=%s>%s</font>", color, value),
-                Html.FROM_HTML_MODE_LEGACY
+                HtmlCompat.FROM_HTML_MODE_LEGACY
             )
 
             binding.listDeviceData.addView(rowEntry.root)

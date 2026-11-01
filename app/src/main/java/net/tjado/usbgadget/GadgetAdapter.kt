@@ -2,9 +2,9 @@ package net.tjado.usbgadget
 
 import android.app.Activity
 import android.graphics.Color
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import net.tjado.usbgadget.databinding.CardviewGadgetBinding
 import java.lang.ref.WeakReference
@@ -39,7 +39,7 @@ class GadgetAdapter(
             binding.tvGadgetProduct.text = gadget?.getValue("product")
             binding.tvGadgetSn.text = gadget?.getValue("serialnumber")
             binding.tvGadgetPath.text = gadget?.getValue("gadget_path")
-            binding.tvGadgetFunctions.text = Html.fromHtml(holder.gadget?.formattedFunctions, Html.FROM_HTML_MODE_LEGACY)
+            binding.tvGadgetFunctions.text = HtmlCompat.fromHtml(holder.gadget?.formattedFunctions.orEmpty(), HtmlCompat.FROM_HTML_MODE_LEGACY)
             binding.tvGadgetStatus.isChecked = gadget?.isActivated == true
 
             val udc = gadget!!.getValue("udc")

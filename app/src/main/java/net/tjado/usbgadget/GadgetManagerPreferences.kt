@@ -29,7 +29,7 @@ class GadgetManagerPreferences(ctx: Context) {
         listenerRegistered = true
 
         val sharedPreferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-            if (key.startsWith(BOOT_CREATE_PREFIX)) {
+            if (key != null && key.startsWith(BOOT_CREATE_PREFIX)) {
                 val gadgetProfile = key.removePrefix(BOOT_CREATE_PREFIX)
                 if (!isAddedDuringBoot(gadgetProfile) && gadgetProfile == getActiveBootGadget()) {
                     uiCallback()

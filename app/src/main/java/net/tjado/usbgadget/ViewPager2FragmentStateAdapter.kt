@@ -10,12 +10,13 @@ class ViewPager2FragmentStateAdapter internal constructor(fragmentActivity: Frag
         return when (position) {
             1 -> DeviceInfoFragment()
             2 -> GadgetManagerFragment()
-            3 -> LogFragment()
+            3 -> ToolsFragment()
+            4 -> LogFragment()
             else -> OverviewFragment()
         }
     }
 
     override fun getItemCount(): Int {
-        return 4
+        return 5
     }
 }

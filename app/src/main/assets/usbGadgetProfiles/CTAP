@@ -29,8 +29,8 @@ cd $GADGET_PATH
 echo '0xa4ac' > idVendor
 echo '0x0525' > idProduct
 
-echo '0x1c37' > bcdDevice
-echo '0x6190' > bcdUSB
+echo '0x0100' > bcdDevice
+echo '0x0200' > bcdUSB
 echo 0 > bDeviceProtocol
 echo 0 > bDeviceSubClass
 echo 8 > bMaxPacketSize0

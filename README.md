@@ -7,13 +7,18 @@ USB Gadget Tool allows you to create and activate USB device roles, like a mouse
 It can also be used to deactivate the standard USB Gadget (including mtp, adb, etc.), e.g. for security reasons.  
 
 Following USB gadgets are integrated:
-* Keyboard & Mouse (/dev/hidg0, /dev/hidg1)
-* FIDO CTAP (/dev/hidg0; for WebAuthn)
+* Keyboard & Mouse (/dev/hidgN)
+* FIDO CTAP (/dev/hidgN; for WebAuthn)
+* Keyboard & FIDO CTAP combined (/dev/hidgN)
 * CCID (/dev/ccid_ctrl, /dev/ccid_bulk)
 * UVC camera (/dev/video?)
 
 USB Gadget Tool requires root permissions and a Kernel with ConfigFS support.
-Currently the app only enables the USB Gadget. For the usage of these device endpoints (e.g. /dev/hidg0) further apps are required (see Use-Cases).
+Currently the app only enables the USB Gadget. For the usage of these device endpoints (e.g. /dev/hidg0) further apps are required (see Use-Cases). A FIDO CTAP gadget is only usable while such an app answers on its node.
+
+The number in /dev/hidgN depends on the order in which HID functions were created across all gadgets, so the gadget's detail page shows the node of each HID function. The kernel allows at most 4 HID functions across all gadgets, including inactive ones.
+
+Keyboard functions set `no_out_endpoint` where the kernel supports it, because unread LED reports on an OUT endpoint can make hosts such as macOS pause all keyboard input. On other kernels, and for gadgets created by earlier versions, keep something reading the keyboard's node.
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
      alt="Get it on F-Droid"

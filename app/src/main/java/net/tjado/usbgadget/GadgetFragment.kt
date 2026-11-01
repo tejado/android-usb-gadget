@@ -83,14 +83,15 @@ class GadgetFragment(private var gadget: GadgetObject) : Fragment() {
         val functions = gadget.functions
         for (functionName in functions) {
             val rowBinding = RowFunctionBinding.inflate(layoutInflater)
-            rowBinding.name.text = functionName
+            rowBinding.name.text = gadget.getHidNode(functionName)
+                ?.let { "$functionName ($it)" } ?: functionName
 
             rowBinding.status.isChecked = gadget.activeFunctions.contains(functionName)
             rowBinding.status.setOnClickListener {
                 if (rowBinding.status.isChecked) {
-                    gadget.activateFunction(functionName, false)
+                    gadget.activateFunction(functionName, true, gadgetViewModel::onCommandFinished)
                 } else {
-                    gadget.deactivateFunction(functionName, true)
+                    gadget.deactivateFunction(functionName, true, gadgetViewModel::onCommandFinished)
                 }
                 gadgetViewModel.reloadGadgetData()
             }

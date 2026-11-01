@@ -1,13 +1,11 @@
 package net.tjado.usbgadget
 
-import androidx.core.util.Pair as APair
-
-class RootTask : CoroutineTask<Void?, APair<*, *>> {
+class RootTask : CoroutineTask<Void?, RootResult> {
     private var listener: OnRootTaskListener?
     private var mCommands: Array<String>
 
     fun interface OnRootTaskListener {
-        fun onRootTaskFinish(response: APair<*, *>?)
+        fun onRootTaskFinish(response: RootResult)
     }
 
     constructor(command: String, listener: OnRootTaskListener?) {
@@ -20,11 +18,11 @@ class RootTask : CoroutineTask<Void?, APair<*, *>> {
         this.listener = listener
     }
 
-    override fun doInBackground(vararg params: Void?): APair<*, *> {
+    override fun doInBackground(vararg params: Void?): RootResult {
         return ExecuteAsRootUtil.execute(mCommands)
     }
 
-    override fun onPostExecute(result: APair<*, *>) {
+    override fun onPostExecute(result: RootResult) {
         if (listener != null) {
             listener!!.onRootTaskFinish(result)
         }

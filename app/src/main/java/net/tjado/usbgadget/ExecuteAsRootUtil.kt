@@ -8,12 +8,13 @@
  */
 package net.tjado.usbgadget
 
-import androidx.core.util.Pair
 import java.io.DataInputStream
 import java.io.DataOutputStream
 import java.io.IOException
 import java.lang.Exception
 import java.util.*
+
+data class RootResult(val success: Boolean, val output: String?, val error: String = "")
 
 /*
  * Class by muzikant <http://stackoverflow.com/users/624109/muzikant>
@@ -67,13 +68,14 @@ object ExecuteAsRootUtil {
         return retval
     }
 
-    fun execute(command: String): Pair<*, *> {
+    fun execute(command: String): RootResult {
         return execute(arrayOf(command))
     }
 
-    fun execute(commands: Array<String>?): Pair<*, *> {
+    fun execute(commands: Array<String>?): RootResult {
         var retval = false
         var output: String? = null
+        var error = ""
 
         try {
             if (commands != null && commands.isNotEmpty()) {
@@ -103,7 +105,7 @@ object ExecuteAsRootUtil {
                 }
                 output = sbOut.toString()
                 Log.d("ROOT (stdout)", output)
-                val error = sbErr.toString()
+                error = sbErr.toString()
                 Log.d("ROOT (stderr)", error)
                 retval = error != "Permission denied"
             }
@@ -115,6 +117,6 @@ object ExecuteAsRootUtil {
             Log.w("ROOT", "Error executing internal operation", ex)
         }
 
-        return Pair<Any?, Any?>(retval, output)
+        return RootResult(retval, output, error)
     }
 }

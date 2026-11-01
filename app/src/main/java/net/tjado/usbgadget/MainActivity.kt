@@ -5,6 +5,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -22,6 +24,19 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+
+        // Android 15+ enforces edge-to-edge: keep content clear of the system bars and cutouts.
+        // The top inset goes on the app bar, so that its color extends behind the status bar.
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout() or
+                    WindowInsetsCompat.Type.ime()
+            )
+            view.setPadding(bars.left, 0, bars.right, bars.bottom)
+            binding.appBar.setPadding(0, bars.top, 0, 0)
+            insets
+        }
 
         binding.viewpager.adapter = ViewPager2FragmentStateAdapter(this)
 
@@ -47,13 +62,24 @@ class MainActivity : AppCompatActivity() {
             when (position) {
                 0 -> tab.text = "Gadgets"
                 1 -> tab.text = "Device Info"
-                2 -> tab.text = "Gadget Manager"
-                3 -> tab.text = "Logs"
+                2 -> tab.text = "BOOT"
+                3 -> tab.text = "Tools"
+                4 -> tab.text = "Logs"
             }
         }
         tabLayoutMediator.attach()
 
         gadgetViewModel = ViewModelProvider(this).get(GadgetViewModel::class.java)
+        gadgetViewModel.commandError.observe(this) { error ->
+            if (error != null) {
+                gadgetViewModel.commandError.value = null
+                AlertDialog.Builder(this)
+                    .setTitle(R.string.command_error_title)
+                    .setMessage(error)
+                    .setPositiveButton("Ok", null)
+                    .show()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -10,6 +10,7 @@ class GadgetViewModel(application: Application) : AndroidViewModel(
 ) {
     val gadgets: MutableLiveData<List<GadgetObject>>
     private val rootGranted: MutableLiveData<Boolean>
+    val commandError = MutableLiveData<String?>()
 
     private val shellApi: GadgetShellApi
     private val assets: GadgetAssetProfiles
@@ -42,23 +43,26 @@ class GadgetViewModel(application: Application) : AndroidViewModel(
         shellApi.updateGadgetData(gadgets, rootGranted)
     }
 
+    /** Refreshes from ConfigFS, as the kernel may have refused the change, and reports errors. */
+    fun onCommandFinished(result: RootResult) {
+        if (result.error.isNotBlank()) {
+            commandError.value = result.error
+        }
+        updateGadgetData()
+    }
+
     fun loadGadgetProfile(gadget: String) {
         val profile = assets.getProfileGadget(gadget)
         if (profile != null) {
-            shellApi.exec(profile) {
-                // update gadget data if new gadget was loaded
-                updateGadgetData()
-            }
+            shellApi.exec(profile, ::onCommandFinished)
         }
     }
 
     fun loadFunctionProfile(gadget: GadgetObject, function: String) {
-        val profile = assets.getProfileFunction(function, gadget.getValue("gadget_path"))
+        val gadgetPath = gadget.getValue("gadget_path")
+        val profile = assets.getProfileFunction(function, gadgetPath)
         if (profile != null) {
-            shellApi.exec(profile) {
-                // update gadget data if new gadget was loaded
-                updateGadgetData()
-            }
+            shellApi.execWithGadgetUnbound(gadgetPath, gadget.isActivated, profile, ::onCommandFinished)
         }
     }
 }
